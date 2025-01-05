@@ -19,6 +19,9 @@ RUN npm run build
 # Install serve to run the built app
 RUN npm install -g serve
 
+# Install gh-pages
+RUN npm install gh-pages --save-dev
+
 # Build app
 RUN npm run build
 
