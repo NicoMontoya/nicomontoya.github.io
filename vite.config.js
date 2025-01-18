@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [react()],
   serfer: {
     hmr: true
-  }
+  },
+  base: '/nicomontoya.github.io/'
 })
