@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && cp .nojekyll dist/",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "GIT=/usr/bin/git gh-pages -d dist"
+    "deploy": "GIT=/usr/bin/git gh-pages -d dist --dotfiles"
   },
   "dependencies": {
     "framer-motion": "^11.15.0",
