@@ -7,16 +7,19 @@ export default defineConfig({
   server: {
     hmr: true
   },
-  base: './',
+  base: '',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
+        entryFileNames: `assets/[name].[hash].js`,
+        chunkFileNames: `assets/[name].[hash].js`,
+        assetFileNames: `assets/[name].[hash].[ext]`
       }
     }
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   }
 })
