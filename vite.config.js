@@ -7,5 +7,5 @@ export default defineConfig({
   server: {
     hmr: true
   },
-  base: '/'
+  base: ''
 })
