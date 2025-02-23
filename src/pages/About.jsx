@@ -51,10 +51,10 @@ function About() {
       >
         <Title>About Me</Title>
         <Text>
-          "It is only once you give up on absolute truth and certainty that you can make progress". The more I learn the more I don't know. There are exceptions to just about every rule in the book. Yet progress is necessary. Data is the best, and fastest way I know to increase progress. It is hard to know where to go if you forget where you have been. To me, data is fascinating, because it gives us a way to build maps in any domain. The more complete the map becomes, the better direction you have.
+        The more I learn, the more I realize how much there is to explore. Certainty is rare, but that’s what makes progress exciting. To me, data is the best tool for making sense of the world—it helps us see where we’ve been and where we’re going, like a map that gets clearer over time.
         </Text>
         <Text>
-          My projects are based on domains that I am interested in. I am constantly seeking answers to questions that are interesting to me. Check them out!
+        I’m always chasing interesting questions, and my projects reflect that curiosity. Take a look around—I’m glad you’re here!
         </Text>
         <Text>
           Thanks for being here :)
