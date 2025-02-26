@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     hmr: true
   },
-  base: '/',
+  base: './',
   build: {
     outDir: 'dist',
     assetsDir: 'assets'
