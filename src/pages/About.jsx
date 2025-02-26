@@ -54,7 +54,7 @@ function About() {
         The more I learn, the more I realize how much there is to explore. Certainty is rare, but that’s what makes progress exciting. To me, data is the best tool for making sense of the world—it helps us see where we’ve been and where we’re going, like a map that gets clearer over time.
         </Text>
         <Text>
-        I’m always chasing interesting questions, and my projects reflect that curiosity. Take a look around—I’m glad you’re here!
+        I’m always chasing interesting questions, and my projects reflect that curiosity. Take a look around -- 
         </Text>
         <Text>
           Thanks for being here :)

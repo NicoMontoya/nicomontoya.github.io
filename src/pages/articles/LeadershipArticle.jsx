@@ -48,31 +48,36 @@ function LeadershipArticle() {
       <Title>On Leadership</Title>
       <Content>
         <p>
-          Leadership, in its truest form, transcends traditional hierarchies and management techniques. It's about creating an environment where others can flourish, innovate, and achieve their fullest potential.
+          Leadership, to me, transcends traditional hierarchies and management techniques. It's about creating an environment where others can flourish, innovate, and achieve their fullest potential.
         </p>
 
-        <h2>The Power of Authentic Connection</h2>
+        <h2>Authentic Connection</h2>
         <p>
-          True leadership begins with authentic connection. In an increasingly digital world, the ability to forge genuine relationships becomes not just valuable, but essential. Leaders must create spaces where vulnerability is welcomed and trust can flourish.
+          True Leadership begins with authentic connection. In an increasingly digital world, the ability to forge genuine relationships becomes not just valuable, but essential. Leaders must create spaces where vulnerability is welcomed and trust can flourish.
         </p>
 
-        <h2>Leading Through Example</h2>
+        <h2>Leading By Example</h2>
         <p>
           The most impactful leadership doesn't come from directives or mandates, but from consistent demonstration of the values and behaviors we wish to see in others. When leaders embody their principles, they create a natural gravitational pull that inspires others to follow.
         </p>
 
-        <h2>Embracing Uncertainty</h2>
+        <h2>Comfort With the Uncomfortable</h2>
         <p>
-          Modern leadership requires comfort with ambiguity. In a world of rapid change and increasing complexity, the ability to navigate uncertainty while maintaining clear vision becomes crucial. Leaders must balance confidence with humility, knowing when to stand firm and when to adapt.
+          Leadership requires comfort with ambiguity. In a world of rapid change and increasing complexity, the ability to navigate uncertainty while maintaining clear vision becomes crucial. Leaders must balance confidence with humility, knowing when to stand firm and when to adapt.
         </p>
 
-        <h2>Cultivating Growth Mindsets</h2>
+        <h2>Growth Mindset</h2>
         <p>
-          Effective leaders create cultures of continuous learning. They understand that growth isn't just about acquiring new skills, but about fostering an environment where experimentation is encouraged and failure is seen as a stepping stone to success.
+          Leaders create cultures of continuous learning. They understand that growth isn't just about acquiring new skills or accomplishing tasks, but about fostering an environment where experimentation is encouraged and failure is seen as a stepping stone to success.
+        </p>
+
+        <h2>Catapult</h2>
+        <p>
+        Most importantly for me, Leaders don't seek the spotlight—they create it for others. The best leadership isn't about being the loudest voice in the room but about empowering those around you to thrive. When a leader becomes invisible, their impact is felt through the success, confidence, and growth of their team.
         </p>
 
         <p>
-          Leadership isn't a destination but a continuous journey of growth, learning, and service to others. It's about creating ripples that extend far beyond our immediate sphere of influence, contributing to positive change in ways we might never fully see.
+          Leadership isn't a title or accolade but a continuous journey of growth, learning, and service to others. It's about creating influence that extend far beyond our immediate sphere of influence, contributing to positive change in ways we might never fully see.
         </p>
       </Content>
     </ArticleContainer>
