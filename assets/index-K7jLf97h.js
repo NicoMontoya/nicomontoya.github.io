@@ -3313,7 +3313,7 @@ void main() {
   @media (max-width: 768px) {
     font-size: 1rem;
   }
-`;function i4(){return we.jsxs(Jk,{children:[we.jsx(Qk,{}),we.jsxs(e4,{children:[we.jsx(t4,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8},children:"Nico Montoya"}),we.jsx(n4,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.2},children:"Curious Wonderer"})]})]})}const r4=ht.div`
+`;function i4(){return we.jsxs(Jk,{children:[we.jsx(Qk,{}),we.jsxs(e4,{children:[we.jsx(t4,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8},children:"Nico"}),we.jsx(n4,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.2},children:"Curious Wonderer"})]})]})}const r4=ht.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem 0;
