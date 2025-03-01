@@ -107,7 +107,7 @@ function Contact() {
           <FaGithub />
         </Link>
         <Link
-          href="https://www.linkedin.com/in/nicomontoya/"
+          href="https://www.linkedin.com/in/nico-montoya/"
           target="_blank"
           rel="noopener noreferrer"
         >
