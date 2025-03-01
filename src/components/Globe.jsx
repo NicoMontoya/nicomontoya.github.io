@@ -8,11 +8,12 @@ const GlobeCanvas = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: ${props => props.$fullscreen ? '1' : '0'};
   background: transparent;
+  pointer-events: ${props => props.$fullscreen ? 'auto' : 'none'};
 `;
 
-const Globe = () => {
+const Globe = ({ fullscreen = false }) => {
   const containerRef = useRef();
 
   useEffect(() => {
@@ -301,7 +302,12 @@ const Globe = () => {
     };
   }, []);
 
-  return <GlobeCanvas ref={containerRef} />;
+  return (
+    <GlobeCanvas
+      ref={containerRef}
+      $fullscreen={fullscreen}
+    />
+  );
 };
 
 export default Globe;

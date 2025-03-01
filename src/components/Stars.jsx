@@ -30,9 +30,10 @@ const Stars = () => {
     // Create star particles
     const starGeometry = new THREE.BufferGeometry();
     const starMaterial = new THREE.PointsMaterial({
-      size: 0.02,
+      size: 0.015,
       vertexColors: true,
       transparent: true,
+      opacity: 0.8,
     });
 
     // Generate random star positions and colors
@@ -51,10 +52,10 @@ const Stars = () => {
       positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
       positions[i * 3 + 2] = radius * Math.cos(phi);
 
-      // Randomize star colors between white and light blue
-      const hue = 0.6 + Math.random() * 0.1; // Blue hue
-      const saturation = Math.random() * 0.3; // Low saturation for more white stars
-      const lightness = 0.8 + Math.random() * 0.2; // Bright stars
+      // Black stars with varying opacity
+      const hue = 0;
+      const saturation = 0;
+      const lightness = 0.1 + Math.random() * 0.1; // Dark stars
       color.setHSL(hue, saturation, lightness);
 
       colors[i * 3] = color.r;
@@ -76,7 +77,7 @@ const Stars = () => {
       stars.rotation.y += 0.0002;
       stars.rotation.x += 0.0001;
 
-      // Twinkle effect
+      // Subtle twinkle effect
       const time = Date.now() * 0.001;
       const colors = starGeometry.attributes.color;
       const positions = starGeometry.attributes.position;
@@ -88,7 +89,7 @@ const Stars = () => {
         const z = positions.array[idx + 2];
 
         // Make stars twinkle based on their position and time
-        const twinkle = Math.sin(time + x * 10 + y * 10 + z * 10) * 0.1 + 0.9;
+        const twinkle = Math.sin(time + x * 5 + y * 5 + z * 5) * 0.05 + 0.95;
         colors.array[idx] *= twinkle;
         colors.array[idx + 1] *= twinkle;
         colors.array[idx + 2] *= twinkle;

@@ -2,8 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App'
+import FullscreenLayout from './layouts/FullscreenLayout'
 import Home from './pages/Home'
 import About from './pages/About'
+import GlobeView from './pages/GlobeView'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 import Writings from './pages/Writings'
@@ -68,6 +70,16 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+    ],
+  },
+  {
+    path: "/globe",
+    element: <FullscreenLayout />,
+    children: [
+      {
+        path: "",
+        element: <GlobeView />,
       },
     ],
   },

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Globe from '../components/Globe'
 import Stars from '../components/Stars'
 
@@ -18,13 +19,22 @@ const HomeContainer = styled.div`
   }
 `
 
+const GlobeLink = styled(Link)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  cursor: pointer;
+`
+
 const Content = styled.div`
   text-align: center;
   max-width: 800px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   padding: 0 1rem;
-  pointer-events: none; // Allow clicking through the text to interact with the globe
 `
 
 const Title = styled(motion.h1)`
@@ -58,6 +68,7 @@ function Home() {
     <HomeContainer>
       <Stars />
       <Globe />
+      <GlobeLink to="/globe" />
       <Content>
         <Title
           initial={{ opacity: 0, y: 20 }}
