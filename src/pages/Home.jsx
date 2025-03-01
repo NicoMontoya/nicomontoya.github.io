@@ -23,6 +23,7 @@ const Content = styled.div`
   position: relative;
   z-index: 1;
   padding: 0 1rem;
+  pointer-events: none; // Allow clicking through the text to interact with the globe
 `
 
 const Title = styled(motion.h1)`
@@ -30,7 +31,8 @@ const Title = styled(motion.h1)`
   margin-bottom: 1.5rem;
   line-height: 1.2;
   color: #ffffff;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5),
+               -1px -1px 4px rgba(0, 0, 0, 0.5);
   font-family: 'Playfair Display', serif;
 
   @media (max-width: 768px) {
@@ -42,7 +44,8 @@ const Title = styled(motion.h1)`
 const Subtitle = styled(motion.p)`
   font-size: 1.25rem;
   color: #f0f0f0;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5),
+               -1px -1px 2px rgba(0, 0, 0, 0.5);
   font-weight: 300;
   font-style: italic;
 
