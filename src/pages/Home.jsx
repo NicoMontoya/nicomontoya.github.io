@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import Globe from '../components/Globe'
+import Stars from '../components/Stars'
 
 const HomeContainer = styled.div`
   background: transparent;
@@ -57,6 +58,7 @@ const Subtitle = styled(motion.p)`
 function Home() {
   return (
     <HomeContainer>
+      <Stars />
       <Globe />
       <Content>
         <Title

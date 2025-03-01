@@ -9,7 +9,7 @@ const GlobeCanvas = styled.div`
   width: 100%;
   height: 100%;
   z-index: -1;
-  background: black;
+  background: transparent;
 `;
 
 const Globe = () => {
@@ -22,9 +22,9 @@ const Globe = () => {
     camera.position.z = 5;
 
     // Renderer setup
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 1);
+    renderer.setClearColor(0x000000, 0);
     containerRef.current.appendChild(renderer.domElement);
 
     // Load Earth texture
