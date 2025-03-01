@@ -3,14 +3,14 @@ import * as THREE from 'three';
 import styled from 'styled-components';
 
 const GlobeCanvas = styled.div`
-  position: fixed;
+  position: ${props => props.$fullscreen ? 'fixed' : 'absolute'};
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: ${props => props.$fullscreen ? '1' : '0'};
   background: transparent;
-  pointer-events: ${props => props.$fullscreen ? 'auto' : 'none'};
+  pointer-events: none;
 `;
 
 const Globe = ({ fullscreen = false }) => {
@@ -24,9 +24,20 @@ const Globe = ({ fullscreen = false }) => {
 
     // Renderer setup
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    const updateSize = () => {
+      if (fullscreen) {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+      } else {
+        const rect = containerRef.current.getBoundingClientRect();
+        renderer.setSize(rect.width, rect.height);
+        camera.aspect = rect.width / rect.height;
+      }
+      camera.updateProjectionMatrix();
+    };
     renderer.setClearColor(0x000000, 0);
     containerRef.current.appendChild(renderer.domElement);
+    updateSize();
 
     // Load Earth texture
     const textureLoader = new THREE.TextureLoader();
@@ -78,17 +89,16 @@ const Globe = ({ fullscreen = false }) => {
     function calculateArcPosition(startPos, endPos, progress, arcHeight) {
       const pos = new THREE.Vector3().lerpVectors(startPos, endPos, progress);
       const up = pos.clone().normalize();
-      // Enhanced arc curve using a modified sine wave
       const arcProgress = Math.sin(progress * Math.PI) * (1 - Math.abs(progress - 0.5));
-      return pos.add(up.multiplyScalar(arcHeight * arcProgress * 2)); // Doubled the effect
+      return pos.add(up.multiplyScalar(arcHeight * arcProgress * 2));
     }
 
     // Traveling lights setup
     const travelingLights = [];
-    const maxLights = 40; // Reduced number of lights for better visibility
+    const maxLights = 40;
     const baseRadius = 0.82;
-    const maxArcHeight = 0.8; // Increased maximum arc height
-    const trailLength = 35; // Increased trail length
+    const maxArcHeight = 0.8;
+    const trailLength = 35;
     
     // Create glow sprite texture
     const glowTexture = new THREE.TextureLoader().load('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAVlpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KTMInWQAAAMFJREFUGBl1QdFRQjEUPCc5PmhBWgA7ECsQK4AOhA6EDqQEqECtQK1ArUCswOH2zRwZhhs+7uXt7d6FTlgRYVXUIK7cDgHdUFXRu0RAeejrb1ZQYyKibqrqXVFBRNx1EUGNb/Rm8rW2PjZ9Q/WnrKpkDIGIUt9FxFPVd5A5KaW6uwewPQG6qWqEQQI2wdOY0VNVn6eUvmb3BWyTWQJ2BFBzNxGZqOqtuwfmXFU9xhgfZgGM44hsL2Y27v4MICKyA/bW2i/HE8N9CKfmuwAAAABJRU5ErkJggg==');
@@ -118,25 +128,23 @@ const Globe = ({ fullscreen = false }) => {
       const endPos = sphericalToCartesian(baseRadius, endTheta, endPhi);
 
       const light = new THREE.Sprite(spriteMaterial.clone());
-      light.scale.set(0.06, 0.06, 1); // Increased size
+      light.scale.set(0.06, 0.06, 1);
       
       const hue = 0.15 + Math.random() * 0.05;
       const saturation = 0.3;
-      const lightness = 0.9; // Increased brightness
+      const lightness = 0.9;
       light.material.color.setHSL(hue, saturation, lightness);
       
-      const pointLight = new THREE.PointLight(0xffffcc, 0.6, 0.4); // Increased intensity and range
+      const pointLight = new THREE.PointLight(0xffffcc, 0.6, 0.4);
       
-      // Calculate arc height based on distance
       const distance = startPos.distanceTo(endPos);
       const arcHeight = maxArcHeight * (distance / (2 * baseRadius));
       
-      // Create trail
       const trail = [];
       for (let i = 0; i < trailLength; i++) {
         const trailDot = new THREE.Sprite(trailMaterial.clone());
         trailDot.material.color.setHSL(hue, saturation, lightness);
-        trailDot.scale.set(0.03, 0.03, 1); // Increased trail dot size
+        trailDot.scale.set(0.03, 0.03, 1);
         scene.add(trailDot);
         trail.push(trailDot);
       }
@@ -145,7 +153,7 @@ const Globe = ({ fullscreen = false }) => {
         startPos: startPos.clone(),
         endPos: endPos.clone(),
         progress: 0,
-        speed: 0.001 + Math.random() * 0.002, // Slower movement
+        speed: 0.001 + Math.random() * 0.002,
         baseScale: 0.06,
         pointLight,
         arcHeight,
@@ -171,8 +179,11 @@ const Globe = ({ fullscreen = false }) => {
     let targetRotationY = 0;
 
     const handleMouseMove = (event) => {
-      targetRotationY = ((event.clientX / window.innerWidth) * 2 - 1) * 0.3;
-      targetRotationX = (-(event.clientY / window.innerHeight) * 2 + 1) * 0.2;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      targetRotationY = ((x / rect.width) * 2 - 1) * 0.3;
+      targetRotationX = (-(y / rect.height) * 2 + 1) * 0.2;
     };
 
     const animate = () => {
@@ -203,37 +214,31 @@ const Globe = ({ fullscreen = false }) => {
           continue;
         }
 
-        // Calculate current position
         const progress = light.userData.progress;
         const currentPos = calculateArcPosition(startPos, endPos, progress, arcHeight);
         light.position.copy(currentPos);
 
-        // Update trail positions
         trailPositions.unshift(currentPos.clone());
         if (trailPositions.length > trailLength) {
           trailPositions.pop();
         }
 
-        // Update trail dots with enhanced visibility
         trail.forEach((dot, index) => {
           if (index < trailPositions.length) {
             dot.position.copy(trailPositions[index]);
-            const opacity = Math.pow(1 - (index / trailLength), 1.5); // More gradual fade
-            dot.material.opacity = opacity * 0.7; // Increased base opacity
+            const opacity = Math.pow(1 - (index / trailLength), 1.5);
+            dot.material.opacity = opacity * 0.7;
             dot.scale.setScalar(0.03 * opacity);
           }
         });
 
-        // Enhanced pulsing glow effect
         const pulseScale = baseScale * (1 + Math.sin(time * 8 + i) * 0.3);
         light.scale.set(pulseScale, pulseScale, 1);
 
-        // Update point light
         pointLight.position.copy(currentPos);
         pointLight.intensity = 0.6 + Math.sin(time * 8 + i) * 0.3;
 
-        // Fade out near the end
-        if (progress > 0.9) { // Later fade out
+        if (progress > 0.9) {
           const fade = (1 - progress) * 10;
           light.material.opacity = fade;
           pointLight.intensity *= fade;
@@ -242,7 +247,6 @@ const Globe = ({ fullscreen = false }) => {
           });
         }
 
-        // Rotate with globe
         const rotation = new THREE.Euler(sphere.rotation.x, sphere.rotation.y, 0);
         light.position.applyEuler(rotation);
         pointLight.position.copy(light.position);
@@ -251,39 +255,35 @@ const Globe = ({ fullscreen = false }) => {
         });
       }
 
-      // Randomly add new lights
-      if (travelingLights.length < maxLights && Math.random() < 0.03) { // Reduced spawn rate
+      if (travelingLights.length < maxLights && Math.random() < 0.03) {
         createTravelingLight();
       }
 
-      // Auto-rotation
       const autoRotationSpeed = 0.001;
       const mouseInfluence = Math.max(0, 1 - (Math.abs(targetRotationY) + Math.abs(targetRotationX)));
       sphere.rotation.y += autoRotationSpeed * mouseInfluence;
       
-      // Wobble
       sphere.rotation.x += Math.sin(time * 0.5) * 0.0005;
       
       renderer.render(scene, camera);
     };
 
-    // Start animation
     animate();
 
-    // Event listeners
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', handleResize);
+    if (fullscreen) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('resize', updateSize);
+    } else {
+      containerRef.current.addEventListener('mousemove', handleMouseMove);
+    }
 
-    // Cleanup
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleResize);
+      if (fullscreen) {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('resize', updateSize);
+      } else {
+        containerRef.current?.removeEventListener('mousemove', handleMouseMove);
+      }
       containerRef.current?.removeChild(renderer.domElement);
       geometry.dispose();
       material.dispose();
@@ -300,7 +300,7 @@ const Globe = ({ fullscreen = false }) => {
         });
       });
     };
-  }, []);
+  }, [fullscreen]);
 
   return (
     <GlobeCanvas

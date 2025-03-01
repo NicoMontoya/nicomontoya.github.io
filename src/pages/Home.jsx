@@ -7,34 +7,48 @@ import Stars from '../components/Stars'
 
 const HomeContainer = styled.div`
   background: transparent;
-  height: calc(100vh - 200px);
+  min-height: 200vh;
+  position: relative;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`
+
+const Header = styled.div`
+  text-align: center;
+  padding-top: 8rem;
+  margin-bottom: 16rem;
+`
+
+const GlobeSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  margin: 20rem 0;
+`
+
+const GlobeContainer = styled.div`
+  position: relative;
+  width: 400px;
+  height: 400px;
 
   @media (max-width: 768px) {
-    height: calc(100vh - 150px);
-    padding: 0 1rem;
+    width: 300px;
+    height: 300px;
   }
 `
 
 const GlobeLink = styled(Link)`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
   cursor: pointer;
-`
-
-const Content = styled.div`
-  text-align: center;
-  max-width: 800px;
-  position: relative;
-  z-index: 2;
-  padding: 0 1rem;
 `
 
 const Title = styled(motion.h1)`
@@ -57,19 +71,27 @@ const Subtitle = styled(motion.p)`
   text-shadow: none;
   font-weight: 300;
   font-style: italic;
+  margin-bottom: 2rem;
 
   @media (max-width: 768px) {
     font-size: 1rem;
   }
 `
 
+const IntroText = styled(motion.p)`
+  font-size: 1.2rem;
+  color: #444444;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+  text-align: center;
+`
+
 function Home() {
   return (
     <HomeContainer>
       <Stars />
-      <Globe />
-      <GlobeLink to="/globe" />
-      <Content>
+      <Header>
         <Title
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,9 +104,24 @@ function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Curious Wonderer
+          Curious Wanderer
         </Subtitle>
-      </Content>
+        <IntroText
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          Welcome...
+
+        
+        </IntroText>
+      </Header>
+      <GlobeSection>
+        <GlobeContainer>
+          <Globe />
+          <GlobeLink to="/globe" aria-label="View fullscreen globe" />
+        </GlobeContainer>
+      </GlobeSection>
     </HomeContainer>
   )
 }
