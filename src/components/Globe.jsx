@@ -9,7 +9,7 @@ const GlobeCanvas = styled.div`
   width: 100%;
   height: 100%;
   z-index: -1;
-  background: linear-gradient(to bottom, rgba(245, 245, 245, 0.8), rgba(229, 229, 229, 0.8));
+  background: linear-gradient(to bottom, rgba(245, 245, 245, 0.3), rgba(229, 229, 229, 0.3));
 `;
 
 const Globe = () => {
@@ -36,12 +36,12 @@ const Globe = () => {
     const geometry = new THREE.SphereGeometry(0.8, 64, 64);
     const material = new THREE.MeshPhysicalMaterial({
       map: earthTexture,
-      metalness: 0.0,
-      roughness: 0.5,
-      clearcoat: 0.1,
-      clearcoatRoughness: 0.1,
-      emissive: new THREE.Color(0x112244),
-      emissiveIntensity: 0.05,
+      metalness: 0.1,
+      roughness: 0.6,
+      clearcoat: 0.3,
+      clearcoatRoughness: 0.2,
+      emissive: new THREE.Color(0x223366),
+      emissiveIntensity: 0.08,
     });
     const sphere = new THREE.Mesh(geometry, material);
     
@@ -50,14 +50,14 @@ const Globe = () => {
     scene.add(sphere);
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-    directionalLight.position.set(1.5, 1, 1);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    directionalLight.position.set(2, 1, 1);
     
-    const pointLight1 = new THREE.PointLight(0xffffff, 0.5, 8);
+    const pointLight1 = new THREE.PointLight(0x4477ff, 0.6, 10);
     pointLight1.position.set(-2, 1, 2);
     
-    const pointLight2 = new THREE.PointLight(0xffffff, 0.5, 8);
+    const pointLight2 = new THREE.PointLight(0xff7744, 0.6, 10);
     pointLight2.position.set(2, -1, 2);
     
     scene.add(ambientLight, directionalLight, pointLight1, pointLight2);
@@ -77,15 +77,18 @@ const Globe = () => {
       sphere.rotation.y += (targetRotationY - sphere.rotation.y) * 0.03;
       sphere.rotation.x += (targetRotationX - sphere.rotation.x) * 0.03;
       
-      // Pulse lights
+      // Smooth light pulsing with different frequencies
       const time = Date.now() * 0.001;
-      pointLight1.intensity = 0.5 + Math.sin(time * 2) * 0.1;
-      pointLight2.intensity = 0.5 + Math.cos(time * 2) * 0.1;
+      pointLight1.intensity = 0.6 + Math.sin(time * 1.5) * 0.2;
+      pointLight2.intensity = 0.6 + Math.cos(time * 1.2) * 0.2;
 
-      // Auto-rotation when not interacting
-      if (Math.abs(targetRotationY) < 0.1 && Math.abs(targetRotationX) < 0.1) {
-        sphere.rotation.y += 0.001;
-      }
+      // Smooth auto-rotation with mouse influence
+      const autoRotationSpeed = 0.001;
+      const mouseInfluence = Math.max(0, 1 - (Math.abs(targetRotationY) + Math.abs(targetRotationX)));
+      sphere.rotation.y += autoRotationSpeed * mouseInfluence;
+      
+      // Add subtle wobble
+      sphere.rotation.x += Math.sin(time * 0.5) * 0.0005;
       
       renderer.render(scene, camera);
     };

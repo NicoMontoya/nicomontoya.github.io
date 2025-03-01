@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Globe from '../components/Globe'
 
 const HomeContainer = styled.div`
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+  background: transparent;
   height: calc(100vh - 200px);
   display: flex;
   align-items: center;
@@ -29,8 +29,9 @@ const Title = styled(motion.h1)`
   font-size: 4.5rem;
   margin-bottom: 1.5rem;
   line-height: 1.2;
-  color: #000000;
-  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  font-family: 'Playfair Display', serif;
 
   @media (max-width: 768px) {
     font-size: 3rem;
@@ -40,9 +41,10 @@ const Title = styled(motion.h1)`
 
 const Subtitle = styled(motion.p)`
   font-size: 1.25rem;
-  color: #333;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+  color: #f0f0f0;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
   font-weight: 300;
+  font-style: italic;
 
   @media (max-width: 768px) {
     font-size: 1rem;
