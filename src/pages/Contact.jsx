@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter } from 'react-icons/fa'
+import Stars from '../components/Stars'
 
 const shake = keyframes`
   0% { transform: translateX(0); }
@@ -16,6 +17,8 @@ const ContactContainer = styled.div`
   margin: 0 auto;
   padding: 2rem 0;
   text-align: center;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -25,7 +28,8 @@ const ContactContainer = styled.div`
 const Title = styled(motion.h2)`
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: #1a1a1a;
+  color: #333333;
+  text-shadow: none;
 
   @media (max-width: 768px) {
     font-size: 2rem;
@@ -34,7 +38,8 @@ const Title = styled(motion.h2)`
 `
 
 const Text = styled(motion.p)`
-  color: #444;
+  color: #444444;
+  text-shadow: none;
   font-size: 1.1rem;
   font-weight: 300;
   margin-bottom: 3rem;
@@ -57,7 +62,8 @@ const LinksContainer = styled.div`
 
 const Link = styled(motion.a)`
   font-size: 1.5rem;
-  color: #666;
+  color: #666666;
+  text-shadow: none;
   transition: all 0.3s ease;
   display: inline-block;
 
@@ -75,7 +81,9 @@ const Link = styled(motion.a)`
 
 function Contact() {
   return (
-    <ContactContainer>
+    <>
+      <Stars />
+      <ContactContainer>
       <Title
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -118,7 +126,8 @@ function Contact() {
           <FaTwitter />
         </Link>
       </LinksContainer>
-    </ContactContainer>
+      </ContactContainer>
+    </>
   )
 }
 

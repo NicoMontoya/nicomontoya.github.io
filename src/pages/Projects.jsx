@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { motion } from 'framer-motion'
+import Stars from '../components/Stars'
 
 const shake = keyframes`
   0% { transform: translateX(0); }
@@ -14,6 +15,8 @@ const ProjectsContainer = styled.div`
   padding: 2rem 0;
   max-width: 1000px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -23,7 +26,8 @@ const ProjectsContainer = styled.div`
 const Title = styled.h2`
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: #1a1a1a;
+  color: #333333;
+  text-shadow: none;
 
   @media (max-width: 768px) {
     font-size: 2rem;
@@ -42,7 +46,7 @@ const ProjectGrid = styled.div`
 `
 
 const ProjectCard = styled(motion.div)`
-  border-bottom: 1px solid #e1e1e1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 3rem;
   
   &:last-child {
@@ -61,7 +65,8 @@ const ProjectCard = styled(motion.div)`
 const ProjectTitle = styled.h3`
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: #1a1a1a;
+  color: #333333;
+  text-shadow: none;
   transition: all 0.3s ease;
 
   ${ProjectCard}:hover & {
@@ -76,7 +81,8 @@ const ProjectTitle = styled.h3`
 `
 
 const ProjectDescription = styled.p`
-  color: #444;
+  color: #444444;
+  text-shadow: none;
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
   font-weight: 300;
@@ -99,7 +105,8 @@ const TechStack = styled.div`
 `
 
 const TechTag = styled.span`
-  color: #666;
+  color: #666666;
+  text-shadow: none;
   font-size: 0.9rem;
   font-weight: 300;
   
@@ -158,7 +165,9 @@ const projects = [
 
 function Projects() {
   return (
-    <ProjectsContainer>
+    <>
+      <Stars />
+      <ProjectsContainer>
       <Title>Projects</Title>
       <ProjectGrid>
         {projects.map((project, index) => (
@@ -178,7 +187,8 @@ function Projects() {
           </ProjectCard>
         ))}
       </ProjectGrid>
-    </ProjectsContainer>
+      </ProjectsContainer>
+    </>
   )
 }
 

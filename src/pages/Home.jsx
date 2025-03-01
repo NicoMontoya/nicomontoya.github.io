@@ -31,9 +31,8 @@ const Title = styled(motion.h1)`
   font-size: 4.5rem;
   margin-bottom: 1.5rem;
   line-height: 1.2;
-  color: #ffffff;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5),
-               -1px -1px 4px rgba(0, 0, 0, 0.5);
+  color: #333333;
+  text-shadow: none;
   font-family: 'Playfair Display', serif;
 
   @media (max-width: 768px) {
@@ -44,9 +43,8 @@ const Title = styled(motion.h1)`
 
 const Subtitle = styled(motion.p)`
   font-size: 1.25rem;
-  color: #f0f0f0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5),
-               -1px -1px 2px rgba(0, 0, 0, 0.5);
+  color: #444444;
+  text-shadow: none;
   font-weight: 300;
   font-style: italic;
 
