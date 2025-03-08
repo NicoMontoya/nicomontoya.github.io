@@ -222,48 +222,68 @@ const Globe = ({ fullscreen = false, year = new Date().getFullYear() }) => {
       }
     });
 
-    // Create a text label for the year with a more elegant design
+    // Create a text label for the year with enhanced visibility
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     canvas.width = 512;
     canvas.height = 256;
     
-    // Create gradient background
-    const gradient = context.createLinearGradient(0, 0, canvas.width, 0);
-    gradient.addColorStop(0, 'rgba(255, 105, 180, 0.1)');
-    gradient.addColorStop(0.5, 'rgba(135, 206, 235, 0.1)');
-    gradient.addColorStop(1, 'rgba(255, 105, 180, 0.1)');
+    // Create a more visible background with gradient
+    const bgGradient = context.createRadialGradient(
+      canvas.width / 2, 
+      canvas.height / 2, 
+      10,
+      canvas.width / 2, 
+      canvas.height / 2, 
+      canvas.width / 2
+    );
+    bgGradient.addColorStop(0, 'rgba(0, 0, 0, 0.7)');
+    bgGradient.addColorStop(0.7, 'rgba(0, 0, 0, 0.4)');
+    bgGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
     
-    context.fillStyle = gradient;
+    context.fillStyle = bgGradient;
     context.fillRect(0, 0, canvas.width, canvas.height);
     
-    // Add subtle glow
-    context.shadowColor = 'rgba(255, 255, 255, 0.5)';
-    context.shadowBlur = 15;
+    // Add outer glow
+    context.shadowColor = 'rgba(255, 255, 255, 0.8)';
+    context.shadowBlur = 25;
+    context.shadowOffsetX = 0;
+    context.shadowOffsetY = 0;
     
-    // Draw text
-    context.font = 'Bold 80px Arial';
+    // Draw text with larger font
+    context.font = 'Bold 100px Arial';
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     
-    // Create text gradient
+    // Create text gradient matching the hover text colors from the rest of the page
     const textGradient = context.createLinearGradient(
       canvas.width * 0.3, 
       canvas.height * 0.5, 
       canvas.width * 0.7, 
       canvas.height * 0.5
     );
-    textGradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-    textGradient.addColorStop(0.5, 'rgba(200, 255, 255, 0.9)');
-    textGradient.addColorStop(1, 'rgba(255, 255, 255, 0.9)');
+    textGradient.addColorStop(0, 'rgba(255, 105, 180, 1.0)'); // #ff69b4 (pink)
+    textGradient.addColorStop(0.5, 'rgba(135, 206, 235, 1.0)'); // #87CEEB (light blue)
+    textGradient.addColorStop(1, 'rgba(255, 105, 180, 1.0)'); // #ff69b4 (pink)
     
     context.fillStyle = textGradient;
     context.fillText(year.toString(), canvas.width / 2, canvas.height / 2);
     
-    // Add subtle border
-    context.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-    context.lineWidth = 1;
+    // Add thicker border for better visibility
+    context.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+    context.lineWidth = 3;
     context.strokeText(year.toString(), canvas.width / 2, canvas.height / 2);
+    
+    // Add second glow layer with matching colors
+    context.shadowColor = 'rgba(135, 206, 235, 0.7)'; // Light blue glow
+    context.shadowBlur = 15;
+    context.fillStyle = 'rgba(255, 255, 255, 0.1)';
+    context.fillText(year.toString(), canvas.width / 2, canvas.height / 2);
+    
+    // Add third glow layer for pink hue
+    context.shadowColor = 'rgba(255, 105, 180, 0.7)'; // Pink glow
+    context.shadowBlur = 10;
+    context.fillText(year.toString(), canvas.width / 2, canvas.height / 2);
     
     const yearTexture = new THREE.CanvasTexture(canvas);
     const yearMaterial = new THREE.SpriteMaterial({ 
@@ -275,8 +295,8 @@ const Globe = ({ fullscreen = false, year = new Date().getFullYear() }) => {
     });
     
     const yearSprite = new THREE.Sprite(yearMaterial);
-    yearSprite.position.set(0, -1.3, 0); // Position slightly higher
-    yearSprite.scale.set(1.2, 0.6, 1);
+    yearSprite.position.set(0, -1.4, 0); // Position slightly lower for better visibility
+    yearSprite.scale.set(1.5, 0.75, 1); // Larger scale for better visibility
     scene.add(yearSprite);
     
     // Fade in the year label with a more elegant animation
@@ -288,7 +308,7 @@ const Globe = ({ fullscreen = false, year = new Date().getFullYear() }) => {
       
       // Use easeOutCubic for smoother animation
       const eased = 1 - Math.pow(1 - progress, 3);
-      yearMaterial.opacity = eased * 0.8; // Max opacity 0.8
+      yearMaterial.opacity = eased * 1.0; // Full opacity for better visibility
       
       if (progress < 1) {
         requestAnimationFrame(fadeIn);
