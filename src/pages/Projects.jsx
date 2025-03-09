@@ -132,6 +132,11 @@ const TechTag = styled.span`
 
 const projects = [
   {
+    title: "TennisWorld",
+    description: "Tennis paradise for tennis nerds.  Work in progress site where you can answer any question you can think of regarding the world of tennis. Keep up with the latest rankings and results. Make your own predictions and more...",
+    tech: ["Javascript", "MongoDB", "Vite"]
+  },
+  {
     title: "Data Science Questions",
     description: "Notebooks that contain Data Science questions and (some) answers from DataInterviewQs.com",
     tech: ["Jupiter", "Python", "Pandas"]
