@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaEnvelope, FaXTwitter } from 'react-icons/fa6'
 import Stars from '../components/Stars'
 
 const shake = keyframes`
@@ -123,7 +123,7 @@ function Contact() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FaTwitter />
+          <FaXTwitter />
         </Link>
       </LinksContainer>
       </ContactContainer>
