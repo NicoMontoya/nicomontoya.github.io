@@ -3355,7 +3355,7 @@ void main() {
   margin: 0 auto;
   line-height: 1.8;
   text-align: center;
-`;function B4(){return he.jsxs(D4,{children:[he.jsx(ha,{}),he.jsxs(I4,{children:[he.jsx(z4,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8},children:"Nico"}),he.jsx(O4,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.2},children:"Curious Wanderer"}),he.jsx(U4,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.4},children:"Welcome..."})]}),he.jsx(F4,{children:he.jsxs(k4,{children:[he.jsx(ZS,{}),he.jsx(N4,{to:"/globe","aria-label":"View fullscreen globe"})]})})]})}const V4=it.div`
+`;function B4(){return he.jsxs(D4,{children:[he.jsx(ha,{}),he.jsxs(I4,{children:[he.jsx(z4,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8},children:"Hello"}),he.jsx(O4,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.2},children:"Curious Wanderer"}),he.jsx(U4,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.8,delay:.4},children:"Welcome..."})]}),he.jsx(F4,{children:he.jsxs(k4,{children:[he.jsx(ZS,{}),he.jsx(N4,{to:"/globe","aria-label":"View fullscreen globe"})]})})]})}const V4=it.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem 0;
