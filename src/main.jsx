@@ -11,6 +11,7 @@ import Contact from './pages/Contact'
 import Writings from './pages/Writings'
 import TennisArticle from './pages/articles/TennisArticle'
 import LeadershipArticle from './pages/articles/LeadershipArticle'
+import AntiFilters from './pages/articles/AntiFilters'
 import PageTransition from './components/PageTransition'
 import { createGlobalStyle } from 'styled-components'
 
@@ -90,6 +91,14 @@ const routes = [
         element: (
           <PageTransition>
             <LeadershipArticle />
+          </PageTransition>
+        ),
+      },
+      {
+        path: "/writings/antifilters",
+        element: (
+          <PageTransition>
+            <AntiFilters />
           </PageTransition>
         ),
       },

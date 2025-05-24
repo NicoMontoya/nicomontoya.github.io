@@ -95,6 +95,12 @@ function Writings() {
             Reflections on authentic leadership and building meaningful connections in the modern world.
           </ArticleExcerpt>
         </ArticleLink>
+        <ArticleLink to="/writings/antifilters">
+          <ArticleTitle>Anti Filters</ArticleTitle>
+          <ArticleExcerpt>
+            Rejection is a signal, not a setback.
+          </ArticleExcerpt>
+        </ArticleLink>
       </ArticleList>
       </WritingsContainer>
     </>
