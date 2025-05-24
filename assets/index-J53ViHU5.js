@@ -3888,7 +3888,7 @@ void main() {
   text-shadow: none;
   font-size: 1rem;
   line-height: 1.6;
-`;function H4(){return K.jsxs(K.Fragment,{children:[K.jsx(ha,{}),K.jsxs(B4,{children:[K.jsx(V4,{children:"Writings"}),K.jsxs(G4,{children:[K.jsxs(vp,{to:"/writings/tennis",children:[K.jsx(yp,{children:"Lessons From Tennis"}),K.jsx(xp,{children:"Exploring the parallels between tennis and life, from mental toughness to strategic thinking."})]}),K.jsxs(vp,{to:"/writings/leadership",children:[K.jsx(yp,{children:"On Leadership"}),K.jsx(xp,{children:"Reflections on authentic leadership and building meaningful connections in the modern world."})]}),K.jsxs(vp,{to:"/writings/antifilters",children:[K.jsx(yp,{children:"Anti Filters"}),K.jsx(xp,{children:"Rejection is a signal, not a setback."})]})]})]})]})}const W4=Ze.div`
+`;function H4(){return K.jsxs(K.Fragment,{children:[K.jsx(ha,{}),K.jsxs(B4,{children:[K.jsx(V4,{children:"Writings"}),K.jsxs(G4,{children:[K.jsxs(vp,{to:"/writings/antifilters",children:[K.jsx(yp,{children:"Anti Filters"}),K.jsx(xp,{children:"Rejection is a signal, not a setback."})]}),K.jsxs(vp,{to:"/writings/tennis",children:[K.jsx(yp,{children:"Lessons From Tennis"}),K.jsx(xp,{children:"Exploring the parallels between tennis and life, from mental toughness to strategic thinking."})]}),K.jsxs(vp,{to:"/writings/leadership",children:[K.jsx(yp,{children:"On Leadership"}),K.jsx(xp,{children:"Reflections on authentic leadership and building meaningful connections in the modern world."})]})]})]})]})}const W4=Ze.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem 0;
