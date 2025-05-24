@@ -83,6 +83,12 @@ function Writings() {
       <WritingsContainer>
       <Title>Writings</Title>
       <ArticleList>
+          <ArticleLink to="/writings/antifilters">
+          <ArticleTitle>Anti Filters</ArticleTitle>
+          <ArticleExcerpt>
+            Rejection is a signal, not a setback.
+          </ArticleExcerpt>
+        </ArticleLink>
         <ArticleLink to="/writings/tennis">
           <ArticleTitle>Lessons From Tennis</ArticleTitle>
           <ArticleExcerpt>
@@ -93,12 +99,6 @@ function Writings() {
           <ArticleTitle>On Leadership</ArticleTitle>
           <ArticleExcerpt>
             Reflections on authentic leadership and building meaningful connections in the modern world.
-          </ArticleExcerpt>
-        </ArticleLink>
-        <ArticleLink to="/writings/antifilters">
-          <ArticleTitle>Anti Filters</ArticleTitle>
-          <ArticleExcerpt>
-            Rejection is a signal, not a setback.
           </ArticleExcerpt>
         </ArticleLink>
       </ArticleList>
