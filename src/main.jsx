@@ -11,6 +11,7 @@ import Contact from './pages/Contact'
 import Writings from './pages/Writings'
 import TennisArticle from './pages/articles/TennisArticle'
 import LeadershipArticle from './pages/articles/LeadershipArticle'
+import PageTransition from './components/PageTransition'
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
@@ -38,38 +39,67 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-const router = createBrowserRouter([
+// Create routes with page transitions
+const routes = [
   {
     path: "/",
     element: <App />,
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <PageTransition>
+            <Home />
+          </PageTransition>
+        ),
       },
       {
         path: "/about",
-        element: <About />,
+        element: (
+          <PageTransition>
+            <About />
+          </PageTransition>
+        ),
       },
       {
         path: "/projects",
-        element: <Projects />,
+        element: (
+          <PageTransition>
+            <Projects />
+          </PageTransition>
+        ),
       },
       {
         path: "/writings",
-        element: <Writings />,
+        element: (
+          <PageTransition>
+            <Writings />
+          </PageTransition>
+        ),
       },
       {
         path: "/writings/tennis",
-        element: <TennisArticle />,
+        element: (
+          <PageTransition>
+            <TennisArticle />
+          </PageTransition>
+        ),
       },
       {
         path: "/writings/leadership",
-        element: <LeadershipArticle />,
+        element: (
+          <PageTransition>
+            <LeadershipArticle />
+          </PageTransition>
+        ),
       },
       {
         path: "/contact",
-        element: <Contact />,
+        element: (
+          <PageTransition>
+            <Contact />
+          </PageTransition>
+        ),
       },
     ],
   },
@@ -79,11 +109,17 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <GlobeView />,
+        element: (
+          <PageTransition>
+            <GlobeView />
+          </PageTransition>
+        ),
       },
     ],
   },
-]);
+];
+
+const router = createBrowserRouter(routes);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

@@ -19,6 +19,14 @@ const GlobeCanvas = styled.div`
   }
 `;
 
+const GlobeContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  class-name: globe-container;
+  data-globe: true;
+`;
+
 // Geographic coordinates to Three.js coordinates conversion
 const geoToVector3 = (lat, lng, radius) => {
   // Convert latitude and longitude to radians
@@ -701,10 +709,12 @@ const Globe = ({ fullscreen = false, year = new Date().getFullYear() }) => {
   }, [fullscreen, year]); // Add year to dependency array
 
   return (
-    <GlobeCanvas
-      ref={containerRef}
-      $fullscreen={fullscreen}
-    />
+    <GlobeContainer className="globe-container" data-globe="true">
+      <GlobeCanvas
+        ref={containerRef}
+        $fullscreen={fullscreen}
+      />
+    </GlobeContainer>
   );
 };
 
