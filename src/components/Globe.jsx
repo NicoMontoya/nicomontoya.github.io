@@ -133,7 +133,7 @@ const Globe = ({ fullscreen = false, year = new Date().getFullYear() }) => {
 
     // Load Earth texture
     const textureLoader = new THREE.TextureLoader();
-    const earthTexture = textureLoader.load('/bathymetryEarth.jpg', (texture) => {
+    const earthTexture = textureLoader.load('/modernearth.jpg', (texture) => {
       texture.encoding = THREE.sRGBEncoding;
       material.needsUpdate = true;
     });
