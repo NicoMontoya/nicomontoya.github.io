@@ -173,7 +173,7 @@ function Projects() {
     <>
       <Stars />
       <ProjectsContainer>
-      <Title>Projects</Title>
+      <Title>Curiosities</Title>
       <ProjectGrid>
         {projects.map((project, index) => (
           <ProjectCard

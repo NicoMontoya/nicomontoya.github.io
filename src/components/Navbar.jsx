@@ -79,11 +79,11 @@ function Navbar() {
     <Nav>
       <Logo to="/">NM</Logo>
       <NavLinks>
-        <NavLink to="/" $isActive={location.pathname === '/'}>Home</NavLink>
-        <NavLink to="/about" $isActive={location.pathname === '/about'}>About</NavLink>
-        <NavLink to="/projects" $isActive={location.pathname === '/projects'}>Projects</NavLink>
-        <NavLink to="/writings" $isActive={location.pathname.includes('/writings')}>Writings</NavLink>
-        <NavLink to="/contact" $isActive={location.pathname === '/contact'}>Contact</NavLink>
+        <NavLink to="/" $isActive={location.pathname === '/'}>Casa</NavLink>
+        <NavLink to="/about" $isActive={location.pathname === '/about'}>Vibe</NavLink>
+        <NavLink to="/projects" $isActive={location.pathname === '/projects'}>Curiosities</NavLink>
+        <NavLink to="/writings" $isActive={location.pathname.includes('/writings')}>Wonderlings</NavLink>
+        <NavLink to="/contact" $isActive={location.pathname === '/contact'}>Poke</NavLink>
       </NavLinks>
     </Nav>
   )

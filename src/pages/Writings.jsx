@@ -81,7 +81,7 @@ function Writings() {
     <>
       <Stars />
       <WritingsContainer>
-      <Title>Writings</Title>
+      <Title>Wonderlings</Title>
       <ArticleList>
           <ArticleLink to="/writings/antifilters">
           <ArticleTitle>Anti Filters</ArticleTitle>

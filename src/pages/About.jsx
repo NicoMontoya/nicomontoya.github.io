@@ -56,7 +56,7 @@ function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Title>About Me</Title>
+          <Title>Vibe</Title>
           <Text>
             The more I learn, the more I realize how much there is to explore. Certainty is rare, but that's what makes progress exciting. To me, data is the best tool for making sense of the world—it helps us see where we've been and where we're going, like a map that gets clearer over time.
           </Text>

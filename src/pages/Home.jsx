@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import Globe from '../components/Globe'
 import Stars from '../components/Stars'
@@ -91,6 +91,66 @@ const IntroText = styled(motion.p)`
   text-align: center;
 `
 
+// Component to rotate through "Hello" in different languages
+const RotatingHello = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Hello in different languages
+  const greetings = [
+    "Hello", // English
+    "Hola", // Spanish
+    "Bonjour", // French
+    "Ciao", // Italian
+    "Hallo", // German
+    "Olá", // Portuguese
+    "Привет", // Russian
+    "你好", // Chinese
+    "こんにちは", // Japanese
+    "안녕하세요", // Korean
+    "नमस्ते", // Hindi
+    "مرحبا", // Arabic
+    "Γεια σας", // Greek
+    "Merhaba", // Turkish
+    "Xin chào", // Vietnamese
+    "Sawubona", // Zulu
+    "Jambo", // Swahili
+    "Hej", // Swedish
+    "Hei", // Finnish
+    "Salam", // Persian
+    "Szia", // Hungarian
+    "Salut", // Romanian
+    "Ahoj", // Czech
+    "Cześć", // Polish
+    "Hej", // Danish
+    "Hallo", // Dutch
+    "Tere", // Estonian
+    "Dia dhuit", // Irish
+    "Kamusta", // Filipino
+    "Sawasdee", // Thai
+  ];
+  
+  useEffect(() => {
+    // Rotate through greetings every 3 seconds
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % greetings.length);
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
+  return (
+    <motion.span
+      key={currentIndex}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5 }}
+    >
+      {greetings[currentIndex]}
+    </motion.span>
+  );
+};
+
 function Home() {
   const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(false);
@@ -122,12 +182,10 @@ function Home() {
         onComplete={handleTransitionComplete}
       />
       <Header>
-        <Title
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          Hello
+        <Title>
+          <AnimatePresence mode="wait">
+            <RotatingHello key={Date.now()} />
+          </AnimatePresence>
         </Title>
         <Subtitle
           initial={{ opacity: 0, y: 20 }}
