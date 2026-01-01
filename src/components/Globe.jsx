@@ -152,9 +152,20 @@ const Globe = ({ fullscreen = false, year = new Date().getFullYear() }) => {
     const locationMarkers = [];
     const markerRadius = 0.82; // Slightly larger than globe radius to ensure visibility
     
-    locationData.forEach(location => {
+    // Get unique locations for "all" mode
+    const uniqueLocations = year === 'all' 
+      ? locationData.reduce((acc, location) => {
+          const existing = acc.find(l => l.name === location.name && l.lat === location.lat && l.lng === location.lng);
+          if (!existing) {
+            acc.push(location);
+          }
+          return acc;
+        }, [])
+      : locationData;
+    
+    uniqueLocations.forEach(location => {
       // Check if the marker should be visible for the current year
-      const isVisible = year >= location.startYear && year <= location.endYear;
+      const isVisible = year === 'all' || (year >= location.startYear && year <= location.endYear);
       
       if (isVisible) {
         // Create marker geometry

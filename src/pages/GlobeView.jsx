@@ -70,11 +70,22 @@ const BackButton = styled(motion.button)`
   }
 `
 
-const YearSelectorContainer = styled.div`
+const ControlsContainer = styled.div`
   position: absolute;
   top: 2rem;
   right: 2rem;
   z-index: 10;
+  display: flex;
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    top: 1rem;
+    right: 1rem;
+    gap: 0.5rem;
+  }
+`
+
+const YearSelectorContainer = styled.div`
   display: flex;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
@@ -93,9 +104,41 @@ const YearSelectorContainer = styled.div`
   }
   
   @media (max-width: 768px) {
-    top: 1rem;
-    right: 1rem;
     padding: 0.6rem 1rem;
+  }
+`
+
+const AllButton = styled.button`
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(255, 105, 180, 0.3), 0 0 20px rgba(135, 206, 235, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    animation: ${glow} 2s infinite;
+    background: linear-gradient(45deg, rgba(255, 105, 180, 0.2), rgba(135, 206, 235, 0.2));
+  }
+  
+  ${props => props.$isActive && `
+    background: linear-gradient(45deg, rgba(255, 105, 180, 0.3), rgba(135, 206, 235, 0.3));
+    border-color: rgba(255, 255, 255, 0.3);
+  `}
+  
+  @media (max-width: 768px) {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
   }
 `
 
@@ -319,6 +362,7 @@ function GlobeView() {
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
+  const [showAll, setShowAll] = useState(false);
   
   // Generate years from current year down to 1993
   const years = [];
@@ -328,6 +372,12 @@ function GlobeView() {
   
   const handleYearSelect = (year) => {
     setSelectedYear(year);
+    setIsDropdownOpen(false);
+    setShowAll(false);
+  };
+  
+  const handleAllClick = () => {
+    setShowAll(!showAll);
     setIsDropdownOpen(false);
   };
   
@@ -358,27 +408,36 @@ function GlobeView() {
         initial="initial"
         animate="animate"
       >
-        <YearSelectorContainer className="year-selector">
-        <YearLabel>Year</YearLabel>
-        <div style={{ position: 'relative' }}>
-          <SelectedYear onClick={toggleDropdown}>
-            {selectedYear}
-          </SelectedYear>
-          <DropdownArrow />
+        <ControlsContainer>
+          <AllButton 
+            onClick={handleAllClick}
+            $isActive={showAll}
+          >
+            All
+          </AllButton>
           
-          <StyledYearOptions $isOpen={isDropdownOpen}>
-            {years.map(year => (
-              <YearOption 
-                key={year} 
-                $isSelected={year === selectedYear}
-                onClick={() => handleYearSelect(year)}
-              >
-                {year}
-              </YearOption>
-            ))}
-          </StyledYearOptions>
-        </div>
-        </YearSelectorContainer>
+          <YearSelectorContainer className="year-selector">
+            <YearLabel>Year</YearLabel>
+            <div style={{ position: 'relative' }}>
+              <SelectedYear onClick={toggleDropdown}>
+                {selectedYear}
+              </SelectedYear>
+              <DropdownArrow />
+              
+              <StyledYearOptions $isOpen={isDropdownOpen}>
+                {years.map(year => (
+                  <YearOption 
+                    key={year} 
+                    $isSelected={year === selectedYear}
+                    onClick={() => handleYearSelect(year)}
+                  >
+                    {year}
+                  </YearOption>
+                ))}
+              </StyledYearOptions>
+            </div>
+          </YearSelectorContainer>
+        </ControlsContainer>
       </motion.div>
       
       <motion.div
@@ -397,7 +456,7 @@ function GlobeView() {
           zIndex: 1,
         }}
       >
-        <Globe fullscreen={true} year={selectedYear} />
+        <Globe fullscreen={true} year={showAll ? 'all' : selectedYear} />
       </motion.div>
     </GlobeViewContainer>
   )
