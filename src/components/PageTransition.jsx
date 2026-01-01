@@ -26,67 +26,29 @@ const standardVariants = {
   },
 };
 
-// Whirlwind transition variants for globe
-const whirlwindVariants = {
+// Simple blur transition for globe - blur to black, then blur in
+const globeVariants = {
   initial: {
     opacity: 0,
-    scale: 0.8,
-    rotate: -180,
-    filter: 'blur(10px)',
+    filter: 'blur(20px)',
+    backgroundColor: 'rgba(0, 0, 0, 1)',
   },
   animate: {
     opacity: 1,
-    scale: 1,
-    rotate: 0,
     filter: 'blur(0px)',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     transition: {
-      duration: 0.8,
-      ease: [0.43, 0.13, 0.23, 0.96], // Custom easing for a more dynamic feel
+      duration: 0.4,
+      ease: "easeOut",
     },
   },
   exit: {
     opacity: 0,
-    scale: 1.2,
-    rotate: 180,
-    filter: 'blur(10px)',
+    filter: 'blur(20px)',
+    backgroundColor: 'rgba(0, 0, 0, 1)',
     transition: {
-      duration: 0.5,
-      ease: [0.43, 0.13, 0.23, 0.96],
-    },
-  },
-};
-
-// Black hole effect specifically for globe transitions
-const blackHoleVariants = {
-  initial: {
-    opacity: 0,
-    scale: 0.01,
-    rotate: 720,
-    filter: 'blur(30px) brightness(0)',
-    transformOrigin: 'center center',
-  },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    rotate: 0,
-    filter: 'blur(0px) brightness(1)',
-    transition: {
-      type: "spring",
-      stiffness: 30,
-      damping: 15,
-      mass: 1.5,
-      duration: 1.5,
-      ease: [0.22, 1, 0.36, 1], // Custom easing for dramatic expansion
-    },
-  },
-  exit: {
-    opacity: 0,
-    scale: 0.01,
-    rotate: -720,
-    filter: 'blur(30px) brightness(0)',
-    transition: {
-      duration: 0.8,
-      ease: [0.645, 0.045, 0.355, 1.000], // Cubic bezier for dramatic collapse
+      duration: 0.3,
+      ease: "easeIn",
     },
   },
 };
@@ -96,13 +58,12 @@ const PageTransition = ({ children }) => {
   
   // Determine which variant to use based on the route
   const isGlobeRoute = location.pathname === '/globe';
-  const isFromGlobe = location.key && location.key.includes('globe');
   
   let variants = standardVariants;
   
-  // Use black hole effect for globe transitions
-  if (isGlobeRoute || isFromGlobe) {
-    variants = isGlobeRoute ? blackHoleVariants : whirlwindVariants;
+  // Use simple blur transition for globe
+  if (isGlobeRoute) {
+    variants = globeVariants;
   }
   
   return (

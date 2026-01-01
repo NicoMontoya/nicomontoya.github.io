@@ -99,7 +99,7 @@ const Globe = ({ fullscreen = false, year = new Date().getFullYear() }) => {
       lat: 33.4484, // Latitude for Phoenix, Arizona
       lng: -112.0740, // Longitude for Phoenix, Arizona
       startYear: 2022,
-      endYear: 2025,
+      endYear: 2026,
       color: 0x87CEEB, // Light blue color to match the gradient theme
     }
     // Add more locations as needed

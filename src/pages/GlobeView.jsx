@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import Globe from '../components/Globe'
 import Stars from '../components/Stars'
-import WhirlwindTransition from '../components/WhirlwindTransition'
 
 const shake = keyframes`
   0% { transform: translateX(0); }
@@ -253,22 +252,18 @@ const SelectedYear = styled.div`
   }
 `
 
-// Motion variants for the globe entrance - ultra-fast, seamless 3D preserved effect
+// Motion variants for the globe entrance - simple blur transition
 const globeEntranceVariants = {
   initial: {
-    scale: 0.01,
     opacity: 0,
-    filter: 'blur(30px) brightness(0.5)',
+    filter: 'blur(20px)',
   },
   animate: {
-    scale: [0.01, 0.3, 0.6, 0.9, 1],
-    opacity: [0, 0.3, 0.6, 0.8, 1],
-    filter: ['blur(30px) brightness(0.5)', 'blur(20px) brightness(0.6)', 'blur(10px) brightness(0.7)', 'blur(5px) brightness(0.9)', 'blur(0px) brightness(1)'],
+    opacity: 1,
+    filter: 'blur(0px)',
     transition: {
-      times: [0, 0.2, 0.4, 0.7, 1],
-      duration: 0.5, // Ultra-fast animation (under 3 seconds total)
-      ease: [0.16, 1, 0.3, 1], // Custom easing for swirling effect
-      delay: 0, // No delay for immediate response
+      duration: 0.6,
+      ease: "easeOut",
     }
   }
 };
@@ -323,47 +318,7 @@ function GlobeView() {
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
-  const [showEnteringParticles, setShowEnteringParticles] = useState(true);
-  const [showExitingParticles, setShowExitingParticles] = useState(false);
-  
-  // Handle back button click with animation
-  const handleBackClick = () => {
-    setIsExiting(true);
-    setShowExitingParticles(true);
-    
-    // Navigate after animation is halfway through
-    setTimeout(() => {
-      navigate('/');
-    }, 600); // Match the cosmos.so style animation timing
-  };
-  
-  // Handle transition animation completion
-  const handleEnteringTransitionComplete = () => {
-    setShowEnteringParticles(false);
-  };
-  
-  const handleExitingTransitionComplete = () => {
-    setShowExitingParticles(false);
-  };
-  
-  // Set isFirstLoad to false after initial animation - ultra-fast
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsFirstLoad(false);
-    }, 500); // Reduced to match animation duration
-    
-    return () => clearTimeout(timer);
-  }, []);
-  
-  // Show entering particles on first load
-  useEffect(() => {
-    setShowEnteringParticles(true);
-    
-    // Don't automatically hide particles - they'll be hidden when animation completes
-    // This ensures the particles are visible for their full animation cycle
-  }, []);
   
   // Generate years from current year down to 1993
   const years = [];
@@ -398,19 +353,6 @@ function GlobeView() {
   return (
     <GlobeViewContainer>
       <Stars />
-      {/* Whirlwind transition effect for entering */}
-      <WhirlwindTransition 
-        isActive={showEnteringParticles} 
-        isEntering={true} // true means particles go FROM globe TO screen
-        onComplete={handleEnteringTransitionComplete}
-      />
-      {/* Whirlwind transition effect for exiting */}
-      <WhirlwindTransition 
-        isActive={showExitingParticles} 
-        isEntering={false} // false means particles go FROM screen TO globe
-        onComplete={handleExitingTransitionComplete}
-      />
-      {/* Back button removed as requested */}
       <motion.div
         variants={yearSelectorVariants}
         initial="initial"
@@ -442,7 +384,7 @@ function GlobeView() {
       <motion.div
         variants={globeEntranceVariants}
         initial="initial"
-        animate={isExiting ? "initial" : "animate"}
+        animate="animate"
         style={{ 
           width: '100%', 
           height: '100%',
@@ -452,56 +394,9 @@ function GlobeView() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          perspective: '1000px',
-          transformStyle: 'preserve-3d',
-          zIndex: 1, // Ensure it's above the background but below particles
+          zIndex: 1,
         }}
       >
-        {/* Subtle swirling effect that doesn't interfere with 3D appearance */}
-        <motion.div
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(0,0,0,0) 30%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 70%)',
-            pointerEvents: 'none',
-            zIndex: 1,
-            opacity: 0,
-          }}
-          initial={{ opacity: 0, rotate: 0 }}
-          animate={{ 
-            opacity: isExiting ? 0 : [0, 0.3, 0.5, 0.3, 0],
-            rotate: isExiting ? 0 : [0, 90, 180, 270, 360],
-          }}
-          transition={{ 
-            times: [0, 0.2, 0.4, 0.7, 1],
-            duration: 0.7, // Ultra-fast animation
-            ease: "easeInOut"
-          }}
-        />
-        {/* Subtle glow effect that enhances 3D appearance */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ 
-            opacity: isExiting ? 0 : [0, 0.3, 0.5, 0.7, 0.7],
-            scale: isExiting ? 0.5 : [0.5, 0.8, 1.0, 1.1, 1.1],
-          }}
-          transition={{
-            times: [0, 0.2, 0.4, 0.7, 1],
-            duration: 0.6, // Ultra-fast animation
-            ease: "easeOut"
-          }}
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(135,206,235,0.5) 0%, rgba(255,105,180,0.3) 50%, rgba(0,0,0,0) 70%)',
-            filter: 'blur(40px)',
-            zIndex: -1,
-          }}
-        />
         <Globe fullscreen={true} year={selectedYear} />
       </motion.div>
     </GlobeViewContainer>

@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import Globe from '../components/Globe'
 import Stars from '../components/Stars'
-import WhirlwindTransition from '../components/WhirlwindTransition'
 
 const HomeContainer = styled.div`
   background: transparent;
@@ -153,34 +152,15 @@ const RotatingHello = () => {
 
 function Home() {
   const navigate = useNavigate();
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [showParticles, setShowParticles] = useState(false);
   
-  // Handle globe click with animation
+  // Handle globe click - simple navigation
   const handleGlobeClick = () => {
-    setIsAnimating(true);
-    setShowParticles(true);
-    
-    // Navigate after animation is halfway through
-    setTimeout(() => {
-      navigate('/globe');
-    }, 600); // Match the cosmos.so style animation timing
-  };
-  
-  // Handle transition animation completion
-  const handleTransitionComplete = () => {
-    setShowParticles(false);
+    navigate('/globe');
   };
   
   return (
     <HomeContainer>
       <Stars />
-      {/* Whirlwind transition effect */}
-      <WhirlwindTransition 
-        isActive={showParticles} 
-        isEntering={false} // false means particles go FROM screen TO globe
-        onComplete={handleTransitionComplete}
-      />
       <Header>
         <Title>
           <AnimatePresence mode="wait">
@@ -206,50 +186,7 @@ function Home() {
       </Header>
       <GlobeSection>
         <GlobeContainer>
-          {/* Globe container */}
           <Globe />
-          
-          {/* Black hole effect overlay - only appears during animation */}
-          {isAnimating && (
-            <motion.div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                zIndex: 5,
-                transformStyle: 'preserve-3d',
-                perspective: '1000px',
-              }}
-              animate={{
-                scale: [1, 0.8, 0.5, 0.2, 0.01],
-                opacity: [1, 1, 0.9, 0.6, 0],
-              }}
-              transition={{
-                duration: 0.3, // Ultra-fast animation
-                ease: [0.645, 0.045, 0.355, 1.000],
-                times: [0, 0.25, 0.5, 0.75, 1]
-              }}
-            >
-              {/* Dark overlay */}
-              <motion.div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 70%)',
-                  pointerEvents: 'none',
-                }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.9 }}
-                transition={{ duration: 0.3 }}
-              />
-            </motion.div>
-          )}
           <GlobeLink 
             onClick={handleGlobeClick}
             whileHover={{ scale: 1.02 }}
