@@ -12,6 +12,7 @@ import Writings from './pages/Writings'
 import TennisArticle from './pages/articles/TennisArticle'
 import LeadershipArticle from './pages/articles/LeadershipArticle'
 import AntiFilters from './pages/articles/AntiFilters'
+import Coffee from './pages/Coffee'
 import PageTransition from './components/PageTransition'
 import { createGlobalStyle } from 'styled-components'
 
@@ -107,6 +108,14 @@ const routes = [
         element: (
           <PageTransition>
             <Contact />
+          </PageTransition>
+        ),
+      },
+      {
+        path: "/coffee",
+        element: (
+          <PageTransition>
+            <Coffee />
           </PageTransition>
         ),
       },

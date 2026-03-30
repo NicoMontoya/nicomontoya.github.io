@@ -84,6 +84,7 @@ function Navbar() {
         <NavLink to="/projects" $isActive={location.pathname === '/projects'}>Curiosities</NavLink>
         <NavLink to="/writings" $isActive={location.pathname.includes('/writings')}>Wonderlings</NavLink>
         <NavLink to="/contact" $isActive={location.pathname === '/contact'}>Poke</NavLink>
+        <NavLink to="/coffee" $isActive={location.pathname === '/coffee'}>Brew</NavLink>
       </NavLinks>
     </Nav>
   )
