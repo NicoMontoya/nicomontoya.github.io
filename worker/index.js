@@ -61,9 +61,9 @@ export default {
       if (pathname === '/checkout/init' && request.method === 'POST') {
         const { items, address } = await request.json()
 
-        // 1. Create shipping address
+        // 1. Create shipping address — API returns { data: "shp_..." } (string ID)
         const addrData = await api('/address', 'POST', address, token)
-        const addressID = addrData?.result?.id
+        const addressID = addrData?.data
         if (!addressID) return json({ error: 'Failed to create address', detail: addrData }, 400)
 
         // 2. Clear existing cart
@@ -77,9 +77,9 @@ export default {
         // 4. Set address on cart
         await api('/cart/address', 'PUT', { addressID }, token)
 
-        // 5. Get card collect URL
+        // 5. Get card collect URL — API returns { data: { url: "..." } }
         const collectData = await api('/card/collect', 'POST', undefined, token)
-        const collectUrl = collectData?.result?.url
+        const collectUrl = collectData?.data?.url
         if (!collectUrl) return json({ error: 'Failed to get payment URL', detail: collectData }, 400)
 
         return json({ ok: true, collectUrl, addressID })
@@ -88,9 +88,9 @@ export default {
       // ── POST /checkout/complete ──────────────────────────────────────────
       // Finalizes the order after the user has entered their card
       if (pathname === '/checkout/complete' && request.method === 'POST') {
-        // 1. Get latest card on the account
+        // 1. Get latest card on the account — API returns { data: [...] }
         const cardsData = await api('/card', 'GET', undefined, token)
-        const cards = cardsData?.result ?? []
+        const cards = cardsData?.data ?? []
         if (cards.length === 0) return json({ error: 'No payment card found. Please add your card first.' }, 400)
 
         const cardID = cards[0].id
@@ -98,9 +98,9 @@ export default {
         // 2. Set card on cart
         await api('/cart/card', 'PUT', { cardID }, token)
 
-        // 3. Convert cart → order
+        // 3. Convert cart → order — API returns { data: { ... } }
         const orderData = await api('/cart/convert', 'POST', undefined, token)
-        const order = orderData?.result
+        const order = orderData?.data
         if (!order) return json({ error: 'Failed to place order', detail: orderData }, 400)
 
         return json({ ok: true, order })
