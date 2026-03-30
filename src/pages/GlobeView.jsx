@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styled, { keyframes } from 'styled-components'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import Globe from '../components/Globe'
 import Stars from '../components/Stars'
@@ -295,6 +295,170 @@ const SelectedYear = styled.div`
   }
 `
 
+// ── Wedding celebration overlay ───────────────────────────────────────────────
+const WeddingOverlay = styled(motion.div)`
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  cursor: pointer;
+`
+
+const ConfettiCanvas = styled.canvas`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+`
+
+const WeddingCard = styled(motion.div)`
+  position: relative;
+  z-index: 1;
+  background: rgba(10, 5, 20, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 182, 210, 0.4);
+  border-radius: 24px;
+  padding: 2.5rem 3.5rem;
+  text-align: center;
+  box-shadow:
+    0 0 40px rgba(255, 105, 180, 0.35),
+    0 0 80px rgba(135, 206, 235, 0.2),
+    0 20px 60px rgba(0, 0, 0, 0.5);
+`
+
+const WeddingRing = styled.div`
+  font-size: 3.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1;
+`
+
+const WeddingDate = styled.div`
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ff69b4, #87CEEB);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+`
+
+const WeddingNames = styled.div`
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
+  margin-bottom: 0.25rem;
+`
+
+const WeddingDismiss = styled.div`
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+`
+
+// Canvas confetti — pure JS, no extra deps
+function launchConfetti(canvas) {
+  const ctx = canvas.getContext('2d')
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+
+  const COLORS = ['#ff69b4', '#87CEEB', '#fff', '#ffd700', '#b39ddb', '#80cbc4']
+  const COUNT = 180
+
+  const pieces = Array.from({ length: COUNT }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height * 0.5,
+    w: Math.random() * 10 + 5,
+    h: Math.random() * 6 + 3,
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    rot: Math.random() * Math.PI * 2,
+    vx: (Math.random() - 0.5) * 3,
+    vy: Math.random() * 3 + 2,
+    vr: (Math.random() - 0.5) * 0.15,
+    opacity: 1,
+  }))
+
+  let raf
+  let startTime = null
+  const DURATION = 4000
+
+  function draw(ts) {
+    if (!startTime) startTime = ts
+    const elapsed = ts - startTime
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    const fadeStart = DURATION * 0.6
+    const globalAlpha = elapsed > fadeStart
+      ? Math.max(0, 1 - (elapsed - fadeStart) / (DURATION - fadeStart))
+      : 1
+
+    pieces.forEach(p => {
+      p.x += p.vx
+      p.y += p.vy
+      p.rot += p.vr
+      p.vy += 0.04 // gravity
+
+      ctx.save()
+      ctx.globalAlpha = globalAlpha * p.opacity
+      ctx.translate(p.x, p.y)
+      ctx.rotate(p.rot)
+      ctx.fillStyle = p.color
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h)
+      ctx.restore()
+    })
+
+    if (elapsed < DURATION) {
+      raf = requestAnimationFrame(draw)
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+    }
+  }
+
+  raf = requestAnimationFrame(draw)
+  return () => cancelAnimationFrame(raf)
+}
+
+function WeddingCelebration({ onDismiss }) {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    if (!canvasRef.current) return
+    const cancel = launchConfetti(canvasRef.current)
+    const timer = setTimeout(onDismiss, 5000)
+    return () => { cancel(); clearTimeout(timer) }
+  }, [onDismiss])
+
+  return (
+    <WeddingOverlay
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+      onClick={onDismiss}
+    >
+      <ConfettiCanvas ref={canvasRef} />
+      <WeddingCard
+        initial={{ scale: 0.6, opacity: 0, y: 40 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.8, opacity: 0, y: -20 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.1 }}
+      >
+        <WeddingRing>💍</WeddingRing>
+        <WeddingDate>3 · 27 · 2026</WeddingDate>
+        <WeddingNames>Nico Montoya &amp; Nataly Yassan</WeddingNames>
+        <WeddingDismiss>click anywhere to continue</WeddingDismiss>
+      </WeddingCard>
+    </WeddingOverlay>
+  )
+}
+
 // Motion variants for the globe entrance - simple blur transition
 const globeEntranceVariants = {
   initial: {
@@ -363,6 +527,16 @@ function GlobeView() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const [showWedding, setShowWedding] = useState(false);
+  const handleDismissWedding = useCallback(() => setShowWedding(false), []);
+
+  // Auto-celebrate on page load during the wedding year
+  useEffect(() => {
+    if (currentYear === 2026) {
+      const t = setTimeout(() => setShowWedding(true), 800);
+      return () => clearTimeout(t);
+    }
+  }, []);
   
   // Generate years from current year down to 1993
   const years = [];
@@ -374,6 +548,7 @@ function GlobeView() {
     setSelectedYear(year);
     setIsDropdownOpen(false);
     setShowAll(false);
+    if (year === 2026) setShowWedding(true);
   };
   
   const handleAllClick = () => {
@@ -402,6 +577,9 @@ function GlobeView() {
   
   return (
     <GlobeViewContainer>
+      <AnimatePresence>
+        {showWedding && <WeddingCelebration onDismiss={handleDismissWedding} />}
+      </AnimatePresence>
       <Stars />
       <motion.div
         variants={yearSelectorVariants}
